@@ -1,0 +1,4 @@
+# Keep line endings identical on Windows and CI so README check is stable
+*.md   text eol=lf
+*.py   text eol=lf
+*.j2   text eol=lf

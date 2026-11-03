@@ -1,0 +1,20 @@
+# Validate rules and make sure README.md was rebuilt in the same MR
+stages:
+  - validate
+
+variables:
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+
+validate-rules:
+  stage: validate
+  image: python:3.12-slim
+  cache:
+    paths:
+      - .cache/pip
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  before_script:
+    - pip install -q -r build/requirements.txt
+  script:
+    - python build/build_rules.py --check
