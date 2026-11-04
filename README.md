@@ -34,16 +34,16 @@ _Auto-generated from `rules/` by `build/build_rules.ps1`. Do not edit this secti
 ## Table of contents
 
 - **BE — Backend**
-    - [BE-001](#be-001) · Không dùng ColumnSet(true) khi Retrieve · Major
+    - [BE-001](#be-001) · Do not use ColumnSet(true) in Retrieve · Major
 
 ## BE — Backend
 
 ### BE-001
 
-**Không dùng ColumnSet(true) khi Retrieve** · Severity: Major · Applied to: plugin, custom-api, workflow, webjob
+**Do not use ColumnSet(true) in Retrieve** · Severity: Major · Applied to: plugin, custom-api, workflow, webjob
 
 #### Description
-Retrieve / RetrieveMultiple chỉ lấy các cột thực sự dùng. ColumnSet(true) kéo toàn bộ cột, tăng thời gian query và payload, dễ đẩy sync plugin tới timeout.
+Retrieve / RetrieveMultiple must fetch only the columns actually used. ColumnSet(true) pulls every column, which increases query time and payload size and can push synchronous plugins into a timeout.
 
 #### Bad
 ```csharp
@@ -58,5 +58,5 @@ var account = service.Retrieve("account", id,
 ```
 
 #### Exceptions
-Copy / clone toàn bộ record — phải comment rõ lý do.
+Copying / cloning an entire record — add a comment explaining why.
 <!-- RULES:END -->
