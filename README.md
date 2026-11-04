@@ -34,13 +34,14 @@ _Auto-generated from `rules/` by `build/build_rules.ps1`. Do not edit this secti
 ## Table of contents
 
 - **BE — Backend**
-    - [BE-001](#be-001) · Do not use ColumnSet(true) in Retrieve · Major
+    - [BE-001](#be-001-do-not-use-columnsettrue-in-retrieve) · Do not use ColumnSet(true) in Retrieve · Major
 
 ## BE — Backend
 
-### BE-001
+### BE-001: Do not use ColumnSet(true) in Retrieve
 
-**Do not use ColumnSet(true) in Retrieve** · Severity: Major · Applied to: plugin, custom-api, workflow, webjob
+- **Severity:** Major
+- **Applied to:** plugin, custom-api, workflow, webjob
 
 #### Description
 Retrieve / RetrieveMultiple must fetch only the columns actually used. ColumnSet(true) pulls every column, which increases query time and payload size and can push synchronous plugins into a timeout.
