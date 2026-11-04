@@ -3,3 +3,4 @@
 *.ps1  text eol=lf
 # Batch files need CRLF or cmd.exe may mis-parse labels/blocks
 *.cmd  text eol=crlf
+*.sh   text eol=lf

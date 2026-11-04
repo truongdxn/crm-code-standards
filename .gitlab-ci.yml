@@ -1,6 +1,8 @@
-# Validate rules and make sure README.md was rebuilt in the same MR
+# Validate rules and make sure README.md was rebuilt in the same MR,
+# then publish the Markdown to the project wiki after merge to the default branch.
 stages:
   - validate
+  - publish
 
 validate-rules:
   stage: validate
@@ -10,3 +12,19 @@ validate-rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
   script:
     - pwsh -NoProfile -File build/build_rules.ps1 -Check
+
+publish-wiki:
+  stage: publish
+  image:
+    name: alpine/git:2.45.2
+    entrypoint: [""]
+  needs: [validate-rules]
+  resource_group: wiki          # one wiki push at a time
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $CI_PIPELINE_SOURCE == "push"
+  variables:
+    # WIKI_TOKEN: project access token (role Developer+, scope write_repository),
+    # stored as a masked + protected CI/CD variable
+    WIKI_URL: "${CI_SERVER_PROTOCOL}://oauth2:${WIKI_TOKEN}@${CI_SERVER_HOST}:${CI_SERVER_PORT}/${CI_PROJECT_PATH}.wiki.git"
+  script:
+    - sh build/publish_wiki.sh
