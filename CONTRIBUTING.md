@@ -22,10 +22,13 @@ flowchart LR
     B -->|Not accepted| X["MR closed"]
     B -->|Approved| C["Merge<br/>Status: Active"]
     C --> D["Applied in<br/>code reviews"]
-    D --> E{"Change<br/>needed?"}
-    E -->|Yes, discussed in<br/>team channel| F["Change MR"]
-    F --> B
     D -->|No longer needed| G["Deprecated"]
+    D --> E{"Change<br/>needed?"}
+    %% Bottom row: declared left to right so "Change MR" sits under "Merge",
+    %% then linkStyle hides the right-hand arrowhead so arrows point right to left
+    B <--> F["Change MR"]
+    F <-->|"Yes, discussed in<br/>team channel"| E
+    linkStyle 7,8 marker-end:none
 ```
 
 | Status         | Meaning                                                                    |
