@@ -44,7 +44,7 @@ flowchart LR
 
 - Take the next free ID in the scope (e.g. `BE-002`). If two open MRs use the same ID, the first to merge keeps it; the other renumbers.
 - Create `rules/<SCOPE>/<ID>.md` from `rules/_TEMPLATE.md`, with `Status: Active`. Submit only the rule file: no build is needed, CI validates it.
-- Open an MR titled `Rule <ID>: <short title>`. In **Description**, choose the template **New_rule** and fill it in: the problem the rule solves, the scope, and the proposed severity.
+- Open an MR titled `Rule <ID>: <short title>`. In **Description**, choose the template **New_rule** and fill it in with the problem the rule solves. Scope and severity are read from the rule file.
 - Complete the [MR checklist](#6-mr-checklist) (it is part of the template).
 
 <details>
@@ -55,9 +55,6 @@ flowchart LR
 
 - **ID:** BE-001
 - **File:** rules/BE/BE-001.md
-- **Scope:** BE
-- **Proposed severity:** Major
-- **Discussion:** <link to the team channel thread>
 
 ## Problem
 
@@ -106,7 +103,7 @@ synchronous plugins close to the 2-minute timeout (see MR !123).
 Included in the **New_rule** MR template.
 
 - [ ] ID is the next free ID in the scope and matches the file name (new rules).
-- [ ] MR description states the problem, scope, and severity.
+- [ ] MR description states the problem the rule solves.
 - [ ] File path and structure follow `rules/<SCOPE>/<ID>.md` and `rules/_TEMPLATE.md`.
 - [ ] `Title` is one imperative sentence.
 - [ ] `Description` explains what and why (1–3 sentences).

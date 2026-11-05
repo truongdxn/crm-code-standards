@@ -1,15 +1,12 @@
 <!--
 MR title: Rule <ID>: <short title>        e.g. Rule BE-002: Use early-bound entities in plugins
-Fill in every section, then delete these comments. See CONTRIBUTING.md, section 3.1, for an example.
+Fill in every section, then delete these comments. Scope and severity are read from the rule file. See CONTRIBUTING.md, section 3.1, for an example.
 -->
 
 ## Rule
 
 - **ID:** <!-- e.g. BE-002 (next free ID in the scope) -->
 - **File:** <!-- rules/<SCOPE>/<ID>.md -->
-- **Scope:** <!-- GE | FE | BE -->
-- **Proposed severity:** <!-- Blocker | Major | Minor | Info -->
-- **Discussion:** <!-- link to the team channel thread, if any -->
 
 ## Problem
 
