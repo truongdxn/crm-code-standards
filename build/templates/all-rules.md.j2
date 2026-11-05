@@ -24,7 +24,8 @@ _Generated from `rules/` by CI on every merge. Do not edit this page: changes ar
 {% for r in active_by_scope[code] %}
 ### {{ r.heading }}
 
-- **Applied to:** {{ r.applied_to | join(", ") }}
+_Applied to:_ {% for a in r.applied_to %}`{{ a }}`{{ ' ' if not loop.last }}{% endfor %}
+
 
 {{ r.body }}
 
