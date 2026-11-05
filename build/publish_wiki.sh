@@ -1,15 +1,18 @@
 #!/bin/sh
-# Mirror the standard's Markdown files into the project wiki.
-# The wiki is owned by CI: manual wiki edits are overwritten on the next run.
+# Publish the generated "All rules" page and the contribution guide to the project wiki.
+# Only these two pages are managed by CI; other wiki pages (e.g. home) are left untouched.
 #
 # Required env:
 #   WIKI_URL  git URL of the wiki repo (with credentials in CI)
 # Optional env:
 #   SRC       repo checkout to publish from (default: current directory)
+#   PAGE      generated All rules page (default: $SRC/dist/All-rules.md)
 set -eu
 
 : "${WIKI_URL:?WIKI_URL is required}"
 SRC=$(cd "${SRC:-.}" && pwd)
+PAGE=${PAGE:-$SRC/dist/All-rules.md}
+[ -f "$PAGE" ] || { echo "Missing $PAGE: run build/build_rules.py --out first." >&2; exit 1; }
 WORK=$(mktemp -d)
 trap 'rm -rf "$WORK"' EXIT
 
@@ -19,14 +22,10 @@ if ! git clone -q --depth 1 "$WIKI_URL" "$WORK/wiki"; then
 fi
 cd "$WORK/wiki"
 
-# Start from an empty tree so deleted rules also disappear from the wiki
-git rm -rq --ignore-unmatch .
-
-cp "$SRC/README.md" home.md              # wiki landing page
+cp "$PAGE" All-rules.md
 cp "$SRC/CONTRIBUTING.md" Contributing.md
-cp -R "$SRC/rules" rules                 # keeps README links to rules/<SCOPE>/<ID>.md working
 
-git add -A
+git add All-rules.md Contributing.md
 if git diff --cached --quiet; then
     echo "Wiki already up to date."
     exit 0

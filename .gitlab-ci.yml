@@ -1,24 +1,37 @@
-# Validate rules and make sure README.md was rebuilt in the same MR,
-# then publish the Markdown to the project wiki after merge to the default branch.
+# MR: validate rules and build a preview of the All rules page.
+# Default branch: same, then publish the page and CONTRIBUTING.md to the wiki.
 stages:
   - validate
   - publish
 
-validate-rules:
+variables:
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+
+build-rules:
   stage: validate
-  image: mcr.microsoft.com/powershell:lts-ubuntu-22.04
+  image: python:3.12-slim
+  cache:
+    paths:
+      - .cache/pip
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  before_script:
+    - pip install -q -r build/requirements.txt
   script:
-    - pwsh -NoProfile -File build/build_rules.ps1 -Check
+    - python build/build_rules.py --out dist/All-rules.md --source-url "$CI_PROJECT_URL/-/blob/$CI_COMMIT_SHA"
+  artifacts:
+    paths:
+      - dist/All-rules.md
+    expose_as: "All rules preview"
+    expire_in: 1 week
 
 publish-wiki:
   stage: publish
   image:
     name: alpine/git:2.45.2
     entrypoint: [""]
-  needs: [validate-rules]
+  needs: [build-rules]
   resource_group: wiki          # one wiki push at a time
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $CI_PIPELINE_SOURCE == "push"

@@ -33,7 +33,7 @@ flowchart LR
 
 | Status         | Meaning                                                                    |
 | -------------- | -------------------------------------------------------------------------- |
-| **Active**     | Enforced according to severity (see README).                               |
+| **Active**     | Enforced according to severity (see [Severity](#72-severity)).              |
 | **Deprecated** | No longer enforced; retained for history. Add `Replaced by` if applicable. |
 
 **Rule IDs are never reused**, including deprecated IDs and IDs from closed MRs.
@@ -43,9 +43,42 @@ flowchart LR
 ### 3.1. Create
 
 - Take the next free ID in the scope (e.g. `BE-002`). If two open MRs use the same ID, the first to merge keeps it; the other renumbers.
-- Create `rules/<SCOPE>/<ID>.md` from `rules/_TEMPLATE.md`, with `Status: Active`.
-- Open an MR titled `Rule <ID>: <short title>`. In the MR description, state the problem the rule solves, the scope, and the proposed severity.
-- Complete the [MR checklist](#6-mr-checklist).
+- Create `rules/<SCOPE>/<ID>.md` from `rules/_TEMPLATE.md`, with `Status: Active`. Submit only the rule file: no build is needed, CI validates it.
+- Open an MR titled `Rule <ID>: <short title>`. In **Description**, choose the template **New_rule** and fill it in: the problem the rule solves, the scope, and the proposed severity.
+- Complete the [MR checklist](#6-mr-checklist) (it is part of the template).
+
+<details>
+<summary>Example MR description</summary>
+
+```markdown
+## Rule
+
+- **ID:** BE-001
+- **File:** rules/BE/BE-001.md
+- **Scope:** BE
+- **Proposed severity:** Major
+- **Discussion:** <link to the team channel thread>
+
+## Problem
+
+Several plugins call Retrieve with ColumnSet(true) on account and contact.
+On large entities this loads every column, slows the query and pushed
+synchronous plugins close to the 2-minute timeout (see MR !123).
+
+## Checklist
+
+- [x] ID is the next free ID in the scope and matches the file name.
+- [x] File path and structure follow `rules/<SCOPE>/<ID>.md` and `rules/_TEMPLATE.md`.
+- [x] `Title` is one imperative sentence.
+- [x] `Description` explains what and why (1–3 sentences).
+- [x] `Bad` and `Good` are real, compilable code examples.
+- [x] `Exceptions` is completed (`None` if not applicable).
+- [x] Severity and status are correct.
+- [ ] Required approvals are present.
+- [ ] CI pipeline passes.
+```
+
+</details>
 
 ### 3.2. Review / Approve
 
@@ -55,7 +88,8 @@ flowchart LR
 ### 3.3. Merge
 
 - The rule is enforced from the merge date.
-- After merge, announce the rule in the team channel.
+- After merge, CI publishes the updated rule set to the **All rules** wiki page.
+- Announce the rule in the team channel.
 
 ## 4. Change or deprecate a rule
 
@@ -69,6 +103,8 @@ flowchart LR
 
 ## 6. MR checklist
 
+Included in the **New_rule** MR template.
+
 - [ ] ID is the next free ID in the scope and matches the file name (new rules).
 - [ ] MR description states the problem, scope, and severity.
 - [ ] File path and structure follow `rules/<SCOPE>/<ID>.md` and `rules/_TEMPLATE.md`.
@@ -79,3 +115,22 @@ flowchart LR
 - [ ] Severity and status are correct.
 - [ ] Required approvals are present.
 - [ ] CI pipeline passes.
+
+## 7. Scopes and severity
+
+### 7.1. Scopes
+
+| Code | Scope |
+| --- | --- |
+| GE | General — applies to all code |
+| FE | Frontend — JS, PCF, Canvas app |
+| BE | Backend — plugin, custom API, workflow, webjob |
+
+### 7.2. Severity
+
+| Level | Meaning | In review |
+| --- | --- | --- |
+| Blocker | Security hole, data loss, production crash | Must fix before merge |
+| Major | Measurable impact on performance, stability, maintainability | Fix, or follow-up ticket approved by lead |
+| Minor | Readability, convention | Should fix, non-blocking |
+| Info | Suggestion | Optional |

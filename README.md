@@ -1,63 +1,24 @@
 # Code Review Standard
 
-Team code review standard. Each rule lives in its own file under `rules/<SCOPE>/<ID>.md`.
+The team's code review standard for CRM development. Each rule lives in its own Markdown file under `rules/<SCOPE>/<ID>.md`. On every merge to the default branch, CI validates the rules and publishes them as one page in the project wiki.
 
-## Scopes
+## Wiki
 
-| Code | Scope |
+- [All rules][all-rules] — every active rule, grouped by scope (generated, do not edit)
+- [Contributing][contributing] — how to submit, change, or deprecate a rule
+
+## Contribute
+
+Read [CONTRIBUTING.md](CONTRIBUTING.md). In short: copy `rules/_TEMPLATE.md`, fill it in, and open an MR with the **New_rule** template. No local build is needed.
+
+## Repository layout
+
+| Path | Content |
 | --- | --- |
-| GE | General — applies to all code |
-| FE | Frontend — JS, PCF, Canvas app |
-| BE | Backend — plugin, custom API, workflow, webjob |
+| `rules/<SCOPE>/<ID>.md` | One file per rule; `rules/_TEMPLATE.md` is the starting point |
+| `.gitlab/merge_request_templates/` | MR description templates |
+| `build/` | CI scripts: validate rules, build the All rules page, publish to the wiki |
 
-## Severity
-
-| Level | Meaning | In review |
-| --- | --- | --- |
-| Blocker | Security hole, data loss, production crash | Must fix before merge |
-| Major | Measurable impact on performance, stability, maintainability | Fix, or follow-up ticket approved by lead |
-| Minor | Readability, convention | Should fix, non-blocking |
-| Info | Suggestion | Optional |
-
-## How to contribute
-
-1. Copy `rules/_TEMPLATE.md` to `rules/<SCOPE>/<ID>.md` (next free number in that scope).
-2. Fill in the frontmatter and the sections `Description`, `Bad`, `Good`, `Exceptions`.
-3. Run `build\build_rules.cmd` (or double-click it) and commit the updated `README.md` with your rule.
-4. Open a merge request. CI fails if a rule is invalid or `README.md` is out of date.
-
-<!-- RULES:START -->
-_Auto-generated from `rules/` by `build/build_rules.ps1`. Do not edit this section by hand._
-
-**1 active** · 0 draft · 0 deprecated
-
-## Table of contents
-
-- **BE — Backend**
-    - [BE-001](#be-001-do-not-use-columnsettrue-in-retrieve) · Do not use ColumnSet(true) in Retrieve · Major
-
-## BE — Backend
-
-### BE-001: Do not use ColumnSet(true) in Retrieve
-
-- **Severity:** Major
-- **Applied to:** plugin, custom-api, workflow, webjob
-
-#### Description
-Retrieve / RetrieveMultiple must fetch only the columns actually used. ColumnSet(true) pulls every column, which increases query time and payload size and can push synchronous plugins into a timeout.
-
-#### Bad
-```csharp
-var account = service.Retrieve("account", id, new ColumnSet(true));
-```
-
-#### Good
-```csharp
-// Only fetch the columns this logic needs
-var account = service.Retrieve("account", id,
-    new ColumnSet("name", "creditlimit"));
-```
-
-#### Exceptions
-Copying / cloning an entire record — add a comment explaining why.
-<!-- RULES:END -->
+<!-- Wiki links: replace GITLAB_HOST/GROUP with the real project path -->
+[all-rules]: https://GITLAB_HOST/GROUP/crm-code-standards/-/wikis/All-rules
+[contributing]: https://GITLAB_HOST/GROUP/crm-code-standards/-/wikis/Contributing

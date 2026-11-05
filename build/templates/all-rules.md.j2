@@ -1,0 +1,44 @@
+{# Layout of the "All rules" wiki page. Edit this file to change the output. #}
+_Generated from `rules/` by CI on every merge. Do not edit this page: changes are overwritten. To add or change a rule, see [Contributing](Contributing)._
+
+**{{ active_count }} active** · {{ deprecated | length }} deprecated · Severity levels: see [Contributing](Contributing#72-severity)
+
+## Table of contents
+
+{% for code, name in scopes.items() %}
+{% if active_by_scope[code] %}
+- **{{ code }} — {{ name }}**
+{% for r in active_by_scope[code] %}
+    - [{{ r.id }}](#{{ r.anchor }}) · {{ r.title }} · {{ r.severity }}
+{% endfor %}
+{% endif %}
+{% endfor %}
+{% if deprecated %}
+- [Deprecated rules](#deprecated-rules)
+{% endif %}
+
+{% for code, name in scopes.items() %}
+{% if active_by_scope[code] %}
+## {{ code }} — {{ name }}
+
+{% for r in active_by_scope[code] %}
+### {{ r.heading }}
+
+- **Severity:** {{ r.severity }}
+- **Applied to:** {{ r.applied_to | join(", ") }}
+
+{{ r.body }}
+
+{% endfor %}
+{% endif %}
+{% endfor %}
+{% if deprecated %}
+## Deprecated rules
+
+| ID | Title | Replaced by |
+| --- | --- | --- |
+{% for r in deprecated %}
+{% set succ = rule_by_id.get(r.replaced_by) if r.replaced_by else none %}
+| {% if source_url %}[{{ r.id }}]({{ source_url }}/{{ r.path }}){% else %}{{ r.id }}{% endif %} | {{ r.title }} | {% if succ and succ.status == "Active" %}[{{ succ.id }}](#{{ succ.anchor }}){% else %}{{ r.replaced_by or "-" }}{% endif %} |
+{% endfor %}
+{% endif %}
