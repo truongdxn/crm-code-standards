@@ -19,14 +19,13 @@ Role holders are maintained in the team space. One person may hold multiple role
 flowchart LR
     A["Create<br/>Rule MR opened"] --> B{"Review /<br/>Approve"}
     B -->|Changes requested| A
+    B -->|Not accepted| X["MR closed"]
     B -->|Approved| C["Merge<br/>Status: Active"]
     C --> D["Applied in<br/>code reviews"]
     D --> E{"Change<br/>needed?"}
-    E -->|"Yes: Change MR<br/>(discussed in team channel)"| B
+    E -->|Yes, discussed in<br/>team channel| F["Change MR"]
+    F --> B
     D -->|No longer needed| G["Deprecated"]
-    B -->|Not accepted| X["MR closed"]
-    %% Invisible link: keeps "MR closed" on the bottom row
-    X ~~~ G
 ```
 
 | Status         | Meaning                                                                    |
