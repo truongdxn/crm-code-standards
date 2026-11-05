@@ -51,7 +51,7 @@ flowchart LR
   | BE | Backend — plugin, custom API, workflow, webjob |
 
 - For each rule, take the next free ID in its scope (e.g. `BE-002`). If another MR merged first with the same ID, renumber only the conflicting rule.
-- Create `rules/<SCOPE>/<ID>.md` from `rules/_TEMPLATE.md`, with `Status: Active`. Submit only the rule files: no build is needed, CI validates them.
+- Create `rules/<SCOPE>/<ID>.md` from `rules/_TEMPLATE.md`, with `Status: Active`. Commit rule files.
 - Open an MR titled `Rule <ID>: <short title>`, or `Rules <ID>, <ID>: <short summary>` for several rules.
 - In **Description**, choose the template **New_rule** and tick the [MR checklist](#6-mr-checklist). Rule details are reviewed in the MR changes.
 
