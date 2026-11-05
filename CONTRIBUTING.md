@@ -16,15 +16,16 @@ Role holders are maintained in the team space. One person may hold multiple role
 ## 2. Rule lifecycle
 
 ```mermaid
-flowchart TD
-    A["Create<br/>Rule MR opened"] --> B{"Review / Approve"}
+flowchart LR
+    A["Create<br/>Rule MR opened"] --> B{"Review /<br/>Approve"}
     B -->|Changes requested| A
     B -->|Not accepted| X["MR closed"]
     B -->|Approved| C["Merge<br/>Status: Active"]
-    C --> D{"Change needed?"}
-    D -->|Discussed in team channel| E["Change MR"]
-    E --> B
-    C --> F["Deprecated<br/>when no longer needed"]
+    C --> D["Applied in<br/>code reviews"]
+    D --> E{"Change<br/>needed?"}
+    E -->|Yes, discussed in<br/>team channel| F["Change MR"]
+    F --> B
+    D -->|No longer needed| G["Deprecated"]
 ```
 
 | Status         | Meaning                                                                    |
