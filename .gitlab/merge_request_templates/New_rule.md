@@ -1,20 +1,12 @@
 <!--
-MR title: Rule <ID>: <short title>        e.g. Rule BE-002: Use early-bound entities in plugins
-Fill in every section, then delete these comments. Scope and severity are read from the rule file. See CONTRIBUTING.md, section 3.1, for an example.
+MR title: Rule <ID>: <short title>          e.g. Rule BE-002: Use early-bound entities in plugins
+      or: Rules <ID>, <ID>: <short summary>  e.g. Rules BE-002, FE-001: Retrieve performance
+Rule details are reviewed in the MR changes. Tick the checklist, then delete this comment.
 -->
 
-## Rule
+## Checklist (every rule in this MR)
 
-- **ID:** <!-- e.g. BE-002 (next free ID in the scope) -->
-- **File:** <!-- rules/<SCOPE>/<ID>.md -->
-
-## Problem
-
-<!-- What problem does this rule solve? Link real code or MRs where it happened, if possible. -->
-
-## Checklist
-
-- [ ] ID is the next free ID in the scope and matches the file name.
+- [ ] ID is the next free ID in its scope and matches the file name.
 - [ ] File path and structure follow `rules/<SCOPE>/<ID>.md` and `rules/_TEMPLATE.md`.
 - [ ] `Title` is one imperative sentence.
 - [ ] `Description` explains what and why (1–3 sentences).

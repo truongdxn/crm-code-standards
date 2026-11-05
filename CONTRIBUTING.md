@@ -42,40 +42,11 @@ flowchart LR
 
 ### 3.1. Create
 
-- Take the next free ID in the scope (e.g. `BE-002`). If two open MRs use the same ID, the first to merge keeps it; the other renumbers.
-- Create `rules/<SCOPE>/<ID>.md` from `rules/_TEMPLATE.md`, with `Status: Active`. Submit only the rule file: no build is needed, CI validates it.
-- Open an MR titled `Rule <ID>: <short title>`. In **Description**, choose the template **New_rule** and fill it in with the problem the rule solves. Scope and severity are read from the rule file.
-- Complete the [MR checklist](#6-mr-checklist) (it is part of the template).
-
-<details>
-<summary>Example MR description</summary>
-
-```markdown
-## Rule
-
-- **ID:** BE-001
-- **File:** rules/BE/BE-001.md
-
-## Problem
-
-Several plugins call Retrieve with ColumnSet(true) on account and contact.
-On large entities this loads every column, slows the query and pushed
-synchronous plugins close to the 2-minute timeout (see MR !123).
-
-## Checklist
-
-- [x] ID is the next free ID in the scope and matches the file name.
-- [x] File path and structure follow `rules/<SCOPE>/<ID>.md` and `rules/_TEMPLATE.md`.
-- [x] `Title` is one imperative sentence.
-- [x] `Description` explains what and why (1–3 sentences).
-- [x] `Bad` and `Good` are real, compilable code examples.
-- [x] `Exceptions` is completed (`None` if not applicable).
-- [x] Severity and status are correct.
-- [ ] Required approvals are present.
-- [ ] CI pipeline passes.
-```
-
-</details>
+- An MR may contain one or more rules, in any scope.
+- For each rule, take the next free ID in its scope (e.g. `BE-002`). If another MR merged first with the same ID, renumber only the conflicting rule.
+- Create `rules/<SCOPE>/<ID>.md` from `rules/_TEMPLATE.md`, with `Status: Active`. Submit only the rule files: no build is needed, CI validates them.
+- Open an MR titled `Rule <ID>: <short title>`, or `Rules <ID>, <ID>: <short summary>` for several rules.
+- In **Description**, choose the template **New_rule** and tick the [MR checklist](#6-mr-checklist). Rule details are reviewed in the MR changes.
 
 ### 3.2. Review / Approve
 
@@ -100,10 +71,9 @@ synchronous plugins close to the 2-minute timeout (see MR !123).
 
 ## 6. MR checklist
 
-Included in the **New_rule** MR template.
+Included in the **New_rule** MR template. Applies to every rule in the MR.
 
-- [ ] ID is the next free ID in the scope and matches the file name (new rules).
-- [ ] MR description states the problem the rule solves.
+- [ ] ID is the next free ID in its scope and matches the file name (new rules).
 - [ ] File path and structure follow `rules/<SCOPE>/<ID>.md` and `rules/_TEMPLATE.md`.
 - [ ] `Title` is one imperative sentence.
 - [ ] `Description` explains what and why (1–3 sentences).
