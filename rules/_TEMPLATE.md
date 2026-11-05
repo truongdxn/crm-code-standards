@@ -1,7 +1,6 @@
 ---
 ID: BE-000                # next free ID in the scope: GE-NNN, FE-NNN or BE-NNN
 Title: One imperative sentence
-Severity: Major           # Blocker | Major | Minor | Info
 Status: Active            # Active | Deprecated
 Applied to: [plugin]      # e.g. [plugin, custom-api, workflow, webjob] or [js, pcf, canvas-app]
 # Replaced by: BE-000     # only when Status is Deprecated and a successor exists

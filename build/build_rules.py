@@ -22,9 +22,8 @@ TEMPLATE_DIR = ROOT / "build" / "templates"
 
 # Closed lists: changed only via MR approved by every scope Maintainer
 SCOPES = {"GE": "General", "FE": "Frontend", "BE": "Backend"}
-SEVERITIES = ["Blocker", "Major", "Minor", "Info"]
 STATUSES = ["Active", "Deprecated"]
-REQUIRED_FIELDS = ["id", "title", "severity", "status", "applied_to"]
+REQUIRED_FIELDS = ["id", "title", "status", "applied_to"]
 REQUIRED_SECTIONS = ["Description", "Bad", "Good", "Exceptions"]
 ID_PATTERN = re.compile(r"^(GE|FE|BE)-\d{3}$")
 
@@ -58,8 +57,6 @@ def validate(path, meta, content):
         if path.parent.name != rid.split("-")[0]:
             errors.append(f"{rel}: must be in folder rules/{rid.split('-')[0]}/")
 
-    if meta["severity"] not in SEVERITIES:
-        errors.append(f"{rel}: Severity '{meta['severity']}' not in {SEVERITIES}")
     if meta["status"] not in STATUSES:
         errors.append(f"{rel}: Status '{meta['status']}' not in {STATUSES}")
     if not isinstance(meta["applied_to"], list):

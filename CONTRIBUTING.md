@@ -33,7 +33,7 @@ flowchart LR
 
 | Status         | Meaning                                                                    |
 | -------------- | -------------------------------------------------------------------------- |
-| **Active**     | Enforced according to severity (see [Severity](#72-severity)).              |
+| **Active**     | Followed in code reviews.                                                  |
 | **Deprecated** | No longer enforced; retained for history. Add `Replaced by` if applicable. |
 
 **Rule IDs are never reused**, including deprecated IDs and IDs from closed MRs.
@@ -79,25 +79,14 @@ Included in the **New_rule** MR template. Applies to every rule in the MR.
 - [ ] `Description` explains what and why (1–3 sentences).
 - [ ] `Bad` and `Good` are real, compilable code examples.
 - [ ] `Exceptions` is completed (`None` if not applicable).
-- [ ] Severity and status are correct.
+- [ ] Status is correct.
 - [ ] Required approvals are present.
 - [ ] CI pipeline passes.
 
-## 7. Scopes and severity
-
-### 7.1. Scopes
+## 7. Scopes
 
 | Code | Scope |
 | --- | --- |
 | GE | General — applies to all code |
 | FE | Frontend — JS, PCF, Canvas app |
 | BE | Backend — plugin, custom API, workflow, webjob |
-
-### 7.2. Severity
-
-| Level | Meaning | In review |
-| --- | --- | --- |
-| Blocker | Security hole, data loss, production crash | Must fix before merge |
-| Major | Measurable impact on performance, stability, maintainability | Fix, or follow-up ticket approved by lead |
-| Minor | Readability, convention | Should fix, non-blocking |
-| Info | Suggestion | Optional |

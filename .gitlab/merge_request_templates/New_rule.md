@@ -12,6 +12,6 @@ Rule details are reviewed in the MR changes. Tick the checklist, then delete thi
 - [ ] `Description` explains what and why (1–3 sentences).
 - [ ] `Bad` and `Good` are real, compilable code examples.
 - [ ] `Exceptions` is completed (`None` if not applicable).
-- [ ] Severity and status are correct.
+- [ ] Status is correct.
 - [ ] Required approvals are present.
 - [ ] CI pipeline passes.

@@ -1,7 +1,7 @@
 {# Layout of the "All rules" wiki page. Edit this file to change the output. #}
 _Generated from `rules/` by CI on every merge. Do not edit this page: changes are overwritten. To add or change a rule, see [Contributing](Contributing)._
 
-**{{ active_count }} active** · {{ deprecated | length }} deprecated · Severity levels: see [Contributing](Contributing#72-severity)
+**{{ active_count }} active** · {{ deprecated | length }} deprecated
 
 ## Table of contents
 
@@ -9,7 +9,7 @@ _Generated from `rules/` by CI on every merge. Do not edit this page: changes ar
 {% if active_by_scope[code] %}
 - **{{ code }} — {{ name }}**
 {% for r in active_by_scope[code] %}
-    - [{{ r.id }}](#{{ r.anchor }}) · {{ r.title }} · {{ r.severity }}
+    - [{{ r.id }}](#{{ r.anchor }}) · {{ r.title }}
 {% endfor %}
 {% endif %}
 {% endfor %}
@@ -24,7 +24,6 @@ _Generated from `rules/` by CI on every merge. Do not edit this page: changes ar
 {% for r in active_by_scope[code] %}
 ### {{ r.heading }}
 
-- **Severity:** {{ r.severity }}
 - **Applied to:** {{ r.applied_to | join(", ") }}
 
 {{ r.body }}
