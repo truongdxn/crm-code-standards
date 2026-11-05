@@ -59,7 +59,7 @@ flowchart LR
 
 ## 4. Change or deprecate a rule
 
-- Raise it in the team channel first, then open an MR with the agreed change. It follows the same Review / Approve and Merge steps.
+- Raise it in the team channel first, then open an MR with the agreed change. It follows steps 3.2 and 3.3.
 - To deprecate, set `Status: Deprecated` and add `Replaced by: <ID>` if a successor exists.
 
 ## 5. Approvals
