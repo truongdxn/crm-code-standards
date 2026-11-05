@@ -40,19 +40,19 @@ flowchart LR
 
 ## 3. Submit a rule
 
-### 1. Create
+### 3.1. Create
 
 - Take the next free ID in the scope (e.g. `BE-002`). If two open MRs use the same ID, the first to merge keeps it; the other renumbers.
 - Create `rules/<SCOPE>/<ID>.md` from `rules/_TEMPLATE.md`, with `Status: Active`.
 - Open an MR titled `Rule <ID>: <short title>`. In the MR description, state the problem the rule solves, the scope, and the proposed severity.
 - Complete the [MR checklist](#6-mr-checklist).
 
-### 2. Review / Approve
+### 3.2. Review / Approve
 
 - Get **2 approvals, including the Maintainer** of the scope.
 - The Maintainer confirms the ID. Reviewers may request changes, or the Maintainer may close the MR with a reason.
 
-### 3. Merge
+### 3.3. Merge
 
 - The rule is enforced from the merge date.
 - After merge, announce the rule in the team channel.
