@@ -17,7 +17,7 @@ Read [CONTRIBUTING.md](CONTRIBUTING.md). In short: copy `rules/_TEMPLATE.md`, fi
 | --- | --- |
 | `rules/<SCOPE>/<ID>.md` | One file per rule; `rules/_TEMPLATE.md` is the starting point |
 | `.gitlab/merge_request_templates/` | MR description templates |
-| `build/` | CI scripts: validate rules, build the All rules page, publish to the wiki |
+| `build/` | CI scripts (PowerShell): validate rules, build the All rules page, publish to the wiki |
 
 <!-- Wiki links: replace GITLAB_HOST/GROUP with the real project path -->
 [all-rules]: https://GITLAB_HOST/GROUP/crm-code-standards/-/wikis/All-rules

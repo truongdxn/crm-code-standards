@@ -1,25 +1,18 @@
+# Runs on a Windows shell runner (PowerShell + git, no Python needed).
 # MR: validate rules and build a preview of the All rules page.
 # Default branch: same, then publish the page and CONTRIBUTING.md to the wiki.
 stages:
   - validate
   - publish
 
-variables:
-  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
-
 build-rules:
   stage: validate
-  image: python:3.12-slim
-  cache:
-    paths:
-      - .cache/pip
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
-  before_script:
-    - pip install -q -r build/requirements.txt
   script:
-    - python build/build_rules.py --out dist/All-rules.md --source-url "$CI_PROJECT_URL/-/blob/$CI_COMMIT_SHA"
+    - powershell -NoProfile -ExecutionPolicy Bypass -File build/build_rules.ps1 -Out dist/All-rules.md -SourceUrl "$env:CI_PROJECT_URL/-/blob/$env:CI_COMMIT_SHA"
+    - if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
   artifacts:
     paths:
       - dist/All-rules.md
@@ -28,9 +21,6 @@ build-rules:
 
 publish-wiki:
   stage: publish
-  image:
-    name: alpine/git:2.45.2
-    entrypoint: [""]
   needs: [build-rules]
   resource_group: wiki          # one wiki push at a time
   rules:
@@ -40,4 +30,5 @@ publish-wiki:
     # stored as a masked + protected CI/CD variable
     WIKI_URL: "${CI_SERVER_PROTOCOL}://oauth2:${WIKI_TOKEN}@${CI_SERVER_HOST}:${CI_SERVER_PORT}/${CI_PROJECT_PATH}.wiki.git"
   script:
-    - sh build/publish_wiki.sh
+    - powershell -NoProfile -ExecutionPolicy Bypass -File build/publish_wiki.ps1 -Page dist/All-rules.md
+    - if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
