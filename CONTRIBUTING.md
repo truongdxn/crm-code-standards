@@ -43,6 +43,13 @@ flowchart LR
 ### 3.1. Create
 
 - An MR may contain one or more rules, in any scope.
+
+  | Scope | Covers |
+  | --- | --- |
+  | GE | General — applies to all code |
+  | FE | Frontend — JS, PCF, Canvas app |
+  | BE | Backend — plugin, custom API, workflow, webjob |
+
 - For each rule, take the next free ID in its scope (e.g. `BE-002`). If another MR merged first with the same ID, renumber only the conflicting rule.
 - Create `rules/<SCOPE>/<ID>.md` from `rules/_TEMPLATE.md`, with `Status: Active`. Submit only the rule files: no build is needed, CI validates them.
 - Open an MR titled `Rule <ID>: <short title>`, or `Rules <ID>, <ID>: <short summary>` for several rules.
@@ -82,11 +89,3 @@ Included in the **New_rule** MR template. Applies to every rule in the MR.
 - [ ] Status is correct.
 - [ ] Required approvals are present.
 - [ ] CI pipeline passes.
-
-## 7. Scopes
-
-| Code | Scope |
-| --- | --- |
-| GE | General — applies to all code |
-| FE | Frontend — JS, PCF, Canvas app |
-| BE | Backend — plugin, custom API, workflow, webjob |
